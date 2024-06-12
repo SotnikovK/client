@@ -1,0 +1,27 @@
+.log-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+form div {
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+form button {
+    cursor: pointer;
+}
+
+.reg {
+    margin-top: 20px;
+    cursor: pointer;
+}
