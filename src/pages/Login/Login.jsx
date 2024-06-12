@@ -19,7 +19,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/auth/login",
+        "http://5.35.91.182:3005/api/auth/login",
         userData
       );
       localStorage.setItem("token", response.data.token);
