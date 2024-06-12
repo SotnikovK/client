@@ -10,35 +10,20 @@ import "./index.css";
 import Login from "./pages/Login/Login";
 
 function App() {
-    return ( <
-        >
-        <
-        Router >
-        <
-        Header / >
-        <
-        Routes >
-        <
-        Route path = "/"
-        element = { < Home / > }
-        /> <
-        Route path = "/Product/:id"
-        element = { < Product / > }
-        /> <
-        Route path = "/Profile"
-        element = { < Profile / > }
-        /> <
-        Route path = "/login"
-        element = { < Login / > }
-        /> <
-        Route path = "/register"
-        element = { < Register / > }
-        /> <
-        /Routes> <
-        Footer / >
-        <
-        /Router> <
-        />
-    );
+  return (
+    <>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />{" "}
+          <Route path="/Product/:id" element={<Product />} />{" "}
+          <Route path="/Profile" element={<Profile />} />{" "}
+          <Route path="/login" element={<Login />} />{" "}
+          <Route path="/register" element={<Register />} />{" "}
+        </Routes>{" "}
+        <Footer />
+      </Router>{" "}
+    </>
+  );
 }
 export default App;

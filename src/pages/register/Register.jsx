@@ -10,7 +10,7 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const baseURL = "http://localhost:3001"; // базовый URL сервера
+  const baseURL = "http://5.35.91.182:3005"; // базовый URL сервера
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,6 +55,7 @@ function Register() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+
         <button type="submit">Зарегистрироваться</button>
       </form>
     </div>
