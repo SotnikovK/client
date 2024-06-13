@@ -1,7 +1,7 @@
 import { NavLink, useParams } from "react-router-dom";
 import { products } from "../Data/db";
 
-function Product({ img, name, price }) {
+function ProductMain({ img, name, price }) {
   return (
     <div className="product">
       <img height={200} src={img} alt="superlight" />
@@ -18,4 +18,4 @@ function Product({ img, name, price }) {
   );
 }
 
-export default Product;
+export default ProductMain;

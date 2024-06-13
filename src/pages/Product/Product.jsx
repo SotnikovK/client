@@ -1,10 +1,11 @@
 import { NavLink, useParams } from "react-router-dom";
-import { products } from "../../components/Data/db";
+import db from "../../components/Data/db.json";
+import React from "react";
 
 function Product() {
   const { id } = useParams();
-  const product = products[id];
-  console.log(product.image);
+  const product = db.devices[id];
+
   return (
     <main className="main-prod">
       <div className="prod">

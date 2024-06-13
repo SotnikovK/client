@@ -1,17 +1,58 @@
+import Filter from "../components/Filter/Filter";
+
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchDevicesRequest,
+  fetchDevicesSuccess,
+  fetchDevicesFailure,
+} from "../redux/actions/devices";
+import { setSortFilter } from "../redux/actions/filter";
 import { NavLink } from "react-router-dom";
 
-import Product from "../components/Product/Product";
-import { products } from "../components/Data/db";
+import db from "../components/Data/db.json";
+import ProductMain from "../components/Product/ProductMain";
 
 function Home() {
   const token = localStorage.getItem("token");
-  console.log(token);
+
+  const dispatch = useDispatch();
+  const { devices, loading, error } = useSelector((state) => state.devices);
+  const { sortBy } = useSelector((state) => state.filter);
+
+  React.useEffect(() => {
+    dispatch(fetchDevicesRequest());
+    try {
+      const data = require("../components/Data/db.json");
+      dispatch(fetchDevicesSuccess(data.devices));
+    } catch (error) {
+      dispatch(fetchDevicesFailure(error.message));
+    }
+  }, [dispatch]);
+
+  const sortProducts = (products, sortBy) => {
+    switch (sortBy) {
+      case "price":
+        return [...products].sort((a, b) => a.price - b.price);
+      case "name":
+        return [...products].sort((a, b) => a.name.localeCompare(b.name));
+      default:
+        return products;
+    }
+  };
+
+  const handleSortChange = (sortBy) => {
+    dispatch(setSortFilter(sortBy));
+  };
+
+  const sortedProducts = sortProducts(db.devices, sortBy);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
-      <div className="content">
-        <h1></h1>
-      </div>
+      <div className="content"></div>
       <div className="contentblock">
         <table class="grid">
           <tr>
@@ -75,68 +116,17 @@ function Home() {
           </tr>
         </table>
       </div>
-      <div className="main__filter">
-        <div className="filter">
-          <p>Цена</p>
-          <div className="pricefilter">
-            <td>
-              <div className="minprice">
-                <input
-                  type="text"
-                  placeholder="От..."
-                  className="minpriceinput"
-                />
-              </div>
-            </td>
-            <td>
-              <div className="maxprice">
-                <input
-                  type="text"
-                  placeholder="До..."
-                  className="maxpriceinput"
-                />
-              </div>
-            </td>
-          </div>
-          <hr />
-          <div className="firmfilter">
-            <p>Производитель:</p>
-            <input
-              type="text"
-              placeholder="Поиск..."
-              className="firmfilterinput"
-            />
-            <main>
-              <div>
-                <li>A4tech</li>
-                <li>Acer</li>
-                <li>Asus</li>
-                <li>Cooler Master</li>
-                <li>Deepcool</li>
-                <li>Dell</li>
-                <li>Gigabyte</li>
-                <li>HyperX</li>
-                <li>Lenovo</li>
-                <li>Logitech</li>
-                <li>MSI</li>
-                <li>Oklick</li>
-                <li>Razer</li>
-                <li>Xiaomi</li>
-              </div>
-            </main>
-          </div>
-        </div>
+      <div className="main-filter-cards">
+        <Filter sortBy={sortBy} handleSortChange={handleSortChange} />
         <div className="cards">
-          {products.map((obj, index) => (
-            <NavLink key={index} to={`/Product/${index}`}>
-              <div>
-                <Product
-                  img={obj.image}
-                  name={obj.name}
-                  description={obj.description}
-                  price={obj.price}
-                />
-              </div>
+          {sortedProducts.map((product) => (
+            <NavLink key={product.id} to={`/product/${product.id}`}>
+              <ProductMain
+                img={product.image}
+                name={product.name}
+                description={product.description}
+                price={product.price}
+              />
             </NavLink>
           ))}
         </div>
